@@ -7,6 +7,12 @@ package edu.greenriver.sdev333;
  * Set complement and element (key) deletion is not supported by this API.
  * @param <KeyType>
  */
+
+/**
+ * Jerome Shadkam
+ *3/8/23
+ */
+
 public interface MathSet<KeyType> {
     /**
      * Puts the specified key into the set.
