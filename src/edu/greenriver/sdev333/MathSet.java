@@ -5,6 +5,8 @@ package edu.greenriver.sdev333;
  * Sets have a collection of unique elements (keys) - no duplicate keys allowed.
  * Set operations include contains, size, union, intersection, and difference.
  * Set complement and element (key) deletion is not supported by this API.
+ *
+ * @author Paul Woods, interface from Ken Hang
  * @param <KeyType>
  */
 public interface MathSet<KeyType> {
