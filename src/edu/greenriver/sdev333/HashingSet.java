@@ -7,7 +7,7 @@ package edu.greenriver.sdev333;
  * @param <Keytype>
  */
 
-public class HashingSet <Keytype> implements MathSet{
+public class HashingSet <Keytype> implements MathSet<Keytype>{
     /**
      * Puts the specified key into the set.
      *

@@ -1,4 +1,7 @@
 package edu.greenriver.sdev333;
+
+import java.util.Iterator;
+
 /**
  * @author Katherine Watkins
  * SDEV 333
@@ -6,15 +9,48 @@ package edu.greenriver.sdev333;
  * @param <KeyType>
  */
 
-public class BSTSet <KeyType> implements MathSet{
+public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<KeyType>{
+    private Node root;
+    private class Node{
+        private KeyType key;
+        private Node left;
+        private Node right;
+        private int N;
+
+        public Node(KeyType key, int N){
+            this.key = key;
+            this.N = N;
+        }
+    }
+
     /**
      * Puts the specified key into the set.
      *
      * @param key key to be added into the set
      */
     @Override
-    public void add(Object key) {
-
+    public void add(KeyType key) {
+        root = add(root, key);
+    }
+    private Node add(Node current, KeyType key){
+        if(current == null){
+            return new Node (key, 1);
+        }
+        int cmp = key.compareTo(current.key);
+        //go left
+        if(cmp < 0){
+            add(current.left, key);
+        }
+        //go right
+        else if(cmp > 0){
+            add(current.right, key);
+        }
+        else{
+            current.key = key;
+        }
+        //update N
+        current.N = size(current.left) + size(current.right) + 1;
+        return current;
     }
 
     /**
@@ -24,7 +60,12 @@ public class BSTSet <KeyType> implements MathSet{
      * @return true if key is in the set, false otherwise
      */
     @Override
-    public boolean contains(Object key) {
+    public boolean contains(KeyType key) {
+        for(KeyType currentKey: this.keys()){
+            if(currentKey.equals(key)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -35,7 +76,7 @@ public class BSTSet <KeyType> implements MathSet{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size()>0;
     }
 
     /**
@@ -45,9 +86,16 @@ public class BSTSet <KeyType> implements MathSet{
      */
     @Override
     public int size() {
-        return 0;
+        return size(root);
     }
-
+    private int size(Node current){
+        if(current == null){
+            return 0;
+        }
+        else{
+            return current.N;
+        }
+    }
     /**
      * Determine the union of this set with another specified set.
      * Returns A union B, where A is this set, B is other set.
@@ -58,8 +106,10 @@ public class BSTSet <KeyType> implements MathSet{
      * @return the union of this set with other
      */
     @Override
-    public MathSet union(MathSet other) {
-        return null;
+    public MathSet<KeyType> union(MathSet<KeyType> other) {
+        MathSet<KeyType> result = new BSTSet<>();
+
+        return result;
     }
 
     /**
@@ -72,7 +122,7 @@ public class BSTSet <KeyType> implements MathSet{
      * @return the intersection of this set with other
      */
     @Override
-    public MathSet intersection(MathSet other) {
+    public MathSet<KeyType> intersection(MathSet<KeyType> other) {
         return null;
     }
 
@@ -86,8 +136,17 @@ public class BSTSet <KeyType> implements MathSet{
      * @return the difference of this set with other
      */
     @Override
-    public MathSet difference(MathSet other) {
-        return null;
+    public MathSet<KeyType> difference(MathSet<KeyType> other) {
+        //create empty set to hold result
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
+        while(itr.hasNext()){
+            KeyType currentKey = itr.next();
+            if(!other.contains(currentKey)){
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -96,7 +155,23 @@ public class BSTSet <KeyType> implements MathSet{
      * @return a collection of all keys in this set
      */
     @Override
-    public Iterable keys() {
-        return null;
+    public Iterable<KeyType> keys() {
+        //empty queue to hold my result
+
+        Queue<KeyType> queue = new Queue<>();
+        //start recursion
+        inOrder(root, queue);
+        //when done return the queue
+        return queue;
+    }
+    private void inOrder(Node current, Queue<KeyType> q){
+        if(current == null){
+            //do nothing - intentionally blank
+            return;
+        }
+
+        inOrder(current.left, q);
+        q.enqueue(current.key);
+        inOrder(current.right, q);
     }
 }
