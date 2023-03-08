@@ -1,4 +1,10 @@
 package edu.greenriver.sdev333;
+/**
+ * @author Katherine Watkins
+ * SDEV 333
+ * Final Project
+ * @param <KeyType>
+ */
 
 public class BSTSet <KeyType> implements MathSet{
     /**

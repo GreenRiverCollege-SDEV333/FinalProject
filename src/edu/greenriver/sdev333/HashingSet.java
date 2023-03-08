@@ -1,5 +1,12 @@
 package edu.greenriver.sdev333;
 
+/**
+ * @author Katherine Watkins
+ * SDEV 333
+ * Final Project
+ * @param <Keytype>
+ */
+
 public class HashingSet <Keytype> implements MathSet{
     /**
      * Puts the specified key into the set.
