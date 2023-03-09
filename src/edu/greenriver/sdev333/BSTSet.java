@@ -57,6 +57,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
     public KeyType get(KeyType key) {
     return get(root, key);
     }
+
      private KeyType get(Node current, KeyType key){
         if(current==null){
             return null;
@@ -136,13 +137,14 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         MathSet<KeyType> result = new BSTSet<KeyType>();
         //walk through this and see if they are in other if not put in result
         //for (item: this) {
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-        while (itr.hasNext()){
-            KeyType currentKey = itr.next();
-            if(other.contains(currentKey)){
-                result.add(currentKey);
-            }
-        }
+
+//        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
+//        while (itr.hasNext()){
+//            KeyType currentKey = itr.next();
+//            if(other.contains(currentKey)){
+//                result.add(currentKey);
+//            }
+//        }
         return result;
     }
 
