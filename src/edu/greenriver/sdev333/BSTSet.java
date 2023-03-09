@@ -2,7 +2,7 @@ package edu.greenriver.sdev333;
 
 import java.util.Iterator;
 
-public class BSTSet<KeyType> implements MathSet<KeyType>{
+public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
 
     // private helper class
     private class Node {
