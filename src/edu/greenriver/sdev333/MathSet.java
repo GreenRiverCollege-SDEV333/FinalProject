@@ -1,6 +1,7 @@
 package edu.greenriver.sdev333;
 
 /**
+ * Bao Huynh
  * A MathSet represents a finite mathematical set.
  * Sets have a collection of unique elements (keys) - no duplicate keys allowed.
  * Set operations include contains, size, union, intersection, and difference.
