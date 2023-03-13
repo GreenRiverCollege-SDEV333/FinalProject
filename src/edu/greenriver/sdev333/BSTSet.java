@@ -32,6 +32,7 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
     public void add(KeyType key) {
         root = add(root, key);
     }
+
     private Node add(Node current, KeyType key){
         if(current == null){
             return new Node (key, 1);
@@ -39,11 +40,11 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
         int cmp = key.compareTo(current.key);
         //go left
         if(cmp < 0){
-            add(current.left, key);
+            current.left = add(current.left, key);
         }
         //go right
         else if(cmp > 0){
-            add(current.right, key);
+            current.right = add(current.right, key);
         }
         else{
             current.key = key;
@@ -76,7 +77,7 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
      */
     @Override
     public boolean isEmpty() {
-        return this.size()>0;
+        return this.size() == 0;
     }
 
     /**
@@ -150,11 +151,10 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
         //create empty set to hold result
         MathSet<KeyType> result = new BSTSet<KeyType>();
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-        while(itr.hasNext()){
-            KeyType currentKey = itr.next();
-            if(!other.contains(currentKey)){
-                result.add(currentKey);
+
+        for (KeyType a: this.keys()) {
+            if(!other.contains(a)){
+                result.add(a);
             }
         }
         return result;
