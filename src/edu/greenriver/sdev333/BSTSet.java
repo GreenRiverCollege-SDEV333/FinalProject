@@ -108,7 +108,12 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
         MathSet<KeyType> result = new BSTSet<>();
-
+        for (KeyType key : other.keys()) {
+                result.add(key);
+        }
+        for (KeyType key : this.keys()) {
+            result.add(key);
+        }
         return result;
     }
 
@@ -123,7 +128,13 @@ public class BSTSet <KeyType extends Comparable<KeyType>> implements MathSet<Key
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new BSTSet<>();
+        for (KeyType key : other.keys()) {
+            if(this.contains(key)){
+                result.add(key);
+            }
+        }
+        return result;
     }
 
     /**
