@@ -1,8 +1,10 @@
 package edu.greenriver.sdev333;
-
-public class BSTSet<KeyType> implements MathSet<KeyType>{
+import java.util.*;
+public class BSTSet<KeyType extends Comparable <KeyType>> implements MathSet<KeyType>{
 
     private Node root;
+
+
     //helper class
     private class Node {
         private KeyType key;
@@ -25,7 +27,51 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public void add(KeyType key) {
+        root = add(root,key);
 
+    }
+
+    private Node add( Node current, KeyType key) {
+        //current is the root of the subtree we are looking at
+
+        //where we are supposed to be
+        if (current == null) {
+            return new Node(key, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+        // cmp will be -1(negative) if key < current.key
+        //cmp will be 0(zero) if the key == current.key
+        // cmp will be +1(positive) if key > current.key
+        if (cmp < 0) {
+            //go left
+            current.left = add(current.left, key);
+
+        } else if (cmp > 0) {
+            //go right\
+            current.right = add(current.right, key);
+        } else {
+            //key already exists
+            current.key = key;
+        }
+
+        current.N = size(current.left) + size(current.right) + 1;
+
+        return current;
+
+    }
+
+    @Override
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node current){
+        if(current == null){
+            return 0;
+        } else {
+            return size(current.left) + size(current.right) + 1;
+        }
     }
 
     /**
@@ -36,8 +82,26 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public boolean contains(KeyType key) {
-        return false;
-    }
+
+
+            //if someone gives me a key, i want to find the value for that key
+            Node current = root;
+            while(current != null){
+                int cmp = key.compareTo(current.key);
+                //compareTo returns neg, zero, pos
+
+                if(cmp < 0){
+                    current = current.left;
+                }else if(cmp > 0){
+                    current = current.right;
+                }else {
+                    return true;
+                }
+            }// end of the while loop
+
+            return false;
+        }
+
 
     /**
      * Is the set empty?
@@ -46,18 +110,10 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return root == null || root.N == 0;
     }
 
-    /**
-     * Number of keys in the set
-     *
-     * @return number of keys in the set.
-     */
-    @Override
-    public int size() {
-        return 0;
-    }
+
 
     /**
      * Determine the union of this set with another specified set.
@@ -70,7 +126,20 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        //add all the elements of this se to the result set
+        for(KeyType currentKey : this.keys()){
+                result.add(currentKey);
+        }
+
+        // add elements of the other set to the result set if they are not already in the result set
+        for (KeyType currentKey : other.keys()) {
+            if (!result.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -84,7 +153,14 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+            if(other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -98,7 +174,30 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        return null;
+
+        //create an empty set that will hold a result
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+            if(!other.contains(currentKey)){
+                result.add(currentKey);
+            }
+        }
+
+        return result;
+
+
+
+        //iterator version
+//       //iterate(walk through) all items in this
+//        Iterator<KeyType> itr = (Iterator<KeyType>)this.keys();
+//        while(itr.hasNext()){
+//            KeyType currentKey = itr.next();
+//            if(!other.contains(currentKey)){
+//                result.add(currentKey);
+//            }
+//        }
+//
     }
 
     /**
@@ -106,8 +205,22 @@ public class BSTSet<KeyType> implements MathSet<KeyType>{
      *
      * @return a collection of all keys in this set
      */
-    @Override
     public Iterable<KeyType> keys() {
-        return null;
+        Queue<KeyType> queue = new Queue<>();
+        //start the recursion, collecting the results in the queue
+        inorder(root,queue);
+        //when done, return the queue
+        return queue;
+    }
+
+    private void inorder(Node current,Queue<KeyType> q){
+        if (current == null){
+            // do nothing - intentionally blank
+            return;
+        }
+
+        inorder(current.left,q);
+        q.enqueue(current.key);
+        inorder(current.right,q);
     }
 }
