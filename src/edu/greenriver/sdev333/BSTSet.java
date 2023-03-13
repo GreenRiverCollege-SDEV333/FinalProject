@@ -2,7 +2,7 @@ package edu.greenriver.sdev333;
 
 import java.util.Iterator;
 
-public class BSTSet<KeyType> implements MathSet<KeyType> {
+public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements MathSet<KeyType> {
 
     // TODO: union method, add this and other to results set, done
 
@@ -33,8 +33,17 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      * @param key key to be added into the set
      */
     @Override
-    public void add(Object key) {
+    public void add(KeyType key) {
+        add(key, root);
+    }
 
+
+    private void add(KeyType key, Node n) {
+        if (key.compareTo(n.key) > 0) {
+            if (n.right == null) {
+                n.right = new Node(key, 0);
+            }
+        }
     }
 
     /**
@@ -44,7 +53,7 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      * @return true if key is in the set, false otherwise
      */
     @Override
-    public boolean contains(Object key) {
+    public boolean contains(KeyType key) {
         return false;
     }
 
