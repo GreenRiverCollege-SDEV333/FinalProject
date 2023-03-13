@@ -1,17 +1,22 @@
 import edu.greenriver.sdev333.BSTSet;
 import edu.greenriver.sdev333.MathSet;
+import edu.greenriver.sdev333.SeperateChainingHashTableSet;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        /// okay both implementations work ken, just uncommen the one you want to use
         System.out.println("Hello world!");
 
         //string created to put in set
         String testString = "A E S T H E T I C ";
 
         //tester method
-        BSTSet<String> tester = new BSTSet<String>();
+        //MathSet<String> tester = new BSTSet<String>();
+        MathSet<String> tester = new SeperateChainingHashTableSet<>();
+
 
         //scanner to add string to BSTSet
         Scanner input = new Scanner(testString);
@@ -25,7 +30,8 @@ public class Main {
             tester.add(key);
         }
 
-        BSTSet<String> otherTester = new BSTSet<String>();
+        //MathSet<String> otherTester = new BSTSet<String>();
+        MathSet<String> otherTester = new SeperateChainingHashTableSet<>();
         otherTester.add("A");
         otherTester.add("a");
         otherTester.add("e");
@@ -85,6 +91,10 @@ public class Main {
         for (String element: differenceTester.keys()){
             System.out.println(element);
         }
+
+
+
+
 
     }
 }

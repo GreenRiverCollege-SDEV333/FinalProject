@@ -1,6 +1,29 @@
 package edu.greenriver.sdev333;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> {
+
+
+    private Node head; // first node in the linked list
+    private int size; // size variable for tracking size
+
+    private class Node {
+        KeyType key;
+        Node next;
+
+        /**
+         * Node class used in lunkedlist symbol table implentation
+         * @param key
+         * @param next
+         */
+        public Node(KeyType key, Node next) {
+            this.key = key;
+            this.next = next;
+        }
+
+    }
 
     /**
      * Puts the specified key into the set.
@@ -10,7 +33,15 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
     @Override
     public void add(KeyType key) {
 
-    }
+            for (Node current = head; current != null; current = current.next) {
+                if (key.equals(current.key)) {
+                    return;
+                }
+            }
+            head = new Node(key, head);
+
+        }
+
 
     /**
      * Is the key in the set?
@@ -20,8 +51,15 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public boolean contains(KeyType key) {
-        return false;
-    }
+
+            for (Node current = head; current != null; current = current.next) {
+                if (key.equals(current.key)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
     /**
      * Is the set empty?
@@ -30,7 +68,9 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public boolean isEmpty() {
-        return false;
+
+
+        return size() == 0;
     }
 
     /**
@@ -40,7 +80,10 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public int size() {
-        return 0;
+        for (KeyType key : this.keys()) {
+            size++;
+        }
+        return size;
     }
 
     /**
@@ -54,7 +97,20 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new SeperateChainingHashTableSet<KeyType>();
+
+        //add all the elements of this se to the result set
+        for(KeyType currentKey : this.keys()){
+            result.add(currentKey);
+        }
+
+        // add elements of the other set to the result set if they are not already in the result set
+        for (KeyType currentKey : other.keys()) {
+            if (!result.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -68,8 +124,16 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new SeperateChainingHashTableSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+            if(other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
+
 
     /**
      * Determine the difference of this set with another specified set.
@@ -82,7 +146,16 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        return null;
+        //create an empty set that will hold a result
+        MathSet<KeyType> result = new SeperateChainingHashTableSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+            if(!other.contains(currentKey)){
+                result.add(currentKey);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -92,6 +165,40 @@ public class SeperateChainingHashTableSet <KeyType> implements MathSet<KeyType> 
      */
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        return new Iterable<>() {
+            @Override
+            public Iterator<KeyType> iterator() {
+                return new SSIterator(head);
+            }
+        };
+    }
+
+
+    /**
+     * helper iterator class used in for each loops
+     */
+    public class SSIterator implements Iterator<KeyType> {
+
+        private Node current;
+
+        public SSIterator(Node head) {
+            current = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public KeyType next() {
+
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            KeyType key = current.key;
+            current = current.next;
+            return key;
+        }
     }
 }
