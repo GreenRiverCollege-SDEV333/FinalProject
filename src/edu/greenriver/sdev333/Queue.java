@@ -3,6 +3,8 @@ package edu.greenriver.sdev333;
 import java.util.Iterator;
 
 /**
+ * Dee Brecke
+ * 3/8/23
  * FIFO queue, page 151 of the red book
  */
 public class Queue<ItemType> implements Iterable<ItemType> {
