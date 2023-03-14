@@ -1,21 +1,48 @@
 package edu.greenriver.sdev333;
 
+import java.lang.reflect.Array;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  * @author Katherine Watkins
  * SDEV 333
  * Final Project
- * @param <Keytype>
+ * @param <KeyType>
  */
 
-public class HashingSet <Keytype> implements MathSet<Keytype>{
+public class HashingSet <KeyType> implements MathSet<KeyType>{
+    private LinkedList [] hs;
+    private int M;
+
+    public HashingSet(){
+        this(997);
+    }
+    public HashingSet(int M){
+        this.M = M;
+        hs = new LinkedList[M];
+        for(int i= 0; i<M; i++){
+            hs[i] = new LinkedList<>();
+        }
+    }
+    private int hash(KeyType key){
+        return (key.hashCode() & 0x7fffffff) % M;
+//        return 1;
+    }
+
+
     /**
      * Puts the specified key into the set.
      *
      * @param key key to be added into the set
      */
     @Override
-    public void add(Object key) {
-
+    public void add(KeyType key) {
+        int index = hash(key);
+        if(!hs[index].contains(key)) {
+            hs[index].add(key);
+        }
     }
 
     /**
@@ -25,7 +52,11 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      * @return true if key is in the set, false otherwise
      */
     @Override
-    public boolean contains(Object key) {
+    public boolean contains(KeyType key) {
+        int index = hash(key);
+        if(hs[index].contains(key)){
+            return true;
+        }
         return false;
     }
 
@@ -36,7 +67,7 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     /**
@@ -46,7 +77,11 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      */
     @Override
     public int size() {
-        return 0;
+        int size = 0;
+        for(int i=0; i < M; i++){
+            size += hs[i].size();
+        }
+        return size;
     }
 
     /**
@@ -59,8 +94,15 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      * @return the union of this set with other
      */
     @Override
-    public MathSet union(MathSet other) {
-        return null;
+    public MathSet <KeyType> union(MathSet<KeyType> other) {
+        MathSet<KeyType> union = new HashingSet<>();
+        for (KeyType key: other.keys()) {
+                union.add(key);
+        }
+        for(KeyType key : this.keys()){
+            union.add(key);
+        }
+        return union;
     }
 
     /**
@@ -73,8 +115,14 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      * @return the intersection of this set with other
      */
     @Override
-    public MathSet intersection(MathSet other) {
-        return null;
+    public MathSet <KeyType> intersection(MathSet<KeyType> other) {
+        MathSet<KeyType> intersection = new HashingSet<>();
+        for(KeyType key : other.keys()){
+            if(this.contains(key)){
+                intersection.add(key);
+            }
+        }
+        return intersection;
     }
 
     /**
@@ -87,8 +135,14 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      * @return the difference of this set with other
      */
     @Override
-    public MathSet difference(MathSet other) {
-        return null;
+    public MathSet<KeyType> difference(MathSet<KeyType> other) {
+        MathSet<KeyType> difference = new HashingSet<>();
+        for (KeyType key: this.keys()) {
+            if(!other.contains(key)){
+                difference.add(key);
+            }
+        }
+        return difference;
     }
 
     /**
@@ -97,7 +151,13 @@ public class HashingSet <Keytype> implements MathSet<Keytype>{
      * @return a collection of all keys in this set
      */
     @Override
-    public Iterable keys() {
-        return null;
+    public Iterable<KeyType> keys() {
+        Queue<KeyType> queue = new Queue<>();
+        for(int i =0; i<M; i++){
+           for(int j= 0; j< hs[i].size(); j++){
+               KeyType current = (KeyType) hs[i].get(j);
+               queue.enqueue(current);           }
+        }
+        return queue;
     }
 }

@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BSTSet;
+import edu.greenriver.sdev333.HashingSet;
 import edu.greenriver.sdev333.MathSet;
 
 
@@ -14,11 +15,12 @@ public class Main {
         one.add("fourth");
         System.out.println(one.isEmpty());
 
-        MathSet<String> two = new BSTSet<>();
+        MathSet<String> two = new HashingSet<>();
         two.add("second");
         two.add("fourth");
         two.add("sixth");
         two.add("eighth");
+        two.add("sixth");
 
         //test add
         System.out.println("TEST ADD -----------");
@@ -50,7 +52,5 @@ public class Main {
         for (String a: difference.keys()) {
             System.out.println(a);
         }
-
-
     }
 }
