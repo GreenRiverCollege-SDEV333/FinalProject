@@ -27,12 +27,12 @@ public class FlightRoutesGraph {
     private MathSet<String> nodes;          // set of nodes
 
     private MathSet<Edge> edges;            // set of edges
-
+/* Commented out so Main class would compile
     public FlightRoutesGraph() {
         nodes = new BSTSet<>();
         edges = new HashSet<>();            // must use HashSet here as edges are not comparable
     }
-
+*/
     public void addNode(String city) {
         nodes.add(city);
     }

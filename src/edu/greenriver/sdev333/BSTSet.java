@@ -1,16 +1,18 @@
 package edu.greenriver.sdev333;
 
-import java.util.Iterator;
+/**
+ * This class implements the MathSet interface, mimicking a mathematical
+ * set while employing a Binary Tree in its implementation. This allows
+ * the BSTSet to be ordered, and requires the Keys that are stored to
+ * implement the Comparable interface.  Some code was written during
+ * class w/ Ken.
+ *
+ * @author Paul Woods
+ * @param <KeyType>
+ */
+public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
 
-public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements MathSet<KeyType> {
-
-    // TODO: union method, add this and other to results set, done
-
-    // TODO: intersect, walk through next, what exists in other, add to result set
-
-    //
-
-    // TODO: Use code from BST class as reference ...
+    // Used code from BST class as reference ...
 
     // node helper class
     private class Node {
@@ -26,6 +28,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
     }
 
     private Node root;
+    private int size;
 
     /**
      * Puts the specified key into the set.
@@ -34,16 +37,47 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      */
     @Override
     public void add(KeyType key) {
-        add(key, root);
+        // in case the tree is empty, having = allows us to save/start the tree
+        if (!contains(key)) {
+            root = add(root, key);
+            ++size;
+        }
     }
 
 
-    private void add(KeyType key, Node n) {
-        if (key.compareTo(n.key) > 0) {
-            if (n.right == null) {
-                n.right = new Node(key, 0);
-            }
+    private Node add(Node n, KeyType key) {
+        // we are where we are supposed to be
+        if (n == null) {
+            // create a new node
+            return new Node(key, 1);
         }
+
+        int cmp = key.compareTo(n.key);
+        // n will be < 0 if key < current
+        // n = 0 if key == current
+        // n > 0 if key > current
+
+        if (cmp < 0) {
+            // go left
+            n.left = add(n.left, key);
+        } else if (cmp > 0) {
+            // go right
+            n.right = add(n.right, key);
+        }
+
+        // update the node's N, number of nodes in subtree
+        // size of left + size of right + self
+        // resets size N as works way back up the stack
+        int l = 0;
+        int r = 0;
+        if (n.right != null)
+            r = n.right.N;
+        if (n.left != null)
+            l = n.left.N;
+
+        n.N = l + r + 1;        // add N values from left and right nodes (if exist)
+
+        return n;
     }
 
     /**
@@ -54,7 +88,29 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      */
     @Override
     public boolean contains(KeyType key) {
-        return false;
+        return contains(root, key);
+    }
+
+    /*
+     * Recursive helper method for contains(KeyType)
+     */
+    private boolean contains(Node current, KeyType key) {
+
+        // if we are at a point that is null and have not found key
+        if (current == null) {
+            return false;
+        }
+
+        // compare current key value to key looking for
+        int compare = key.compareTo(current.key);
+
+        if (compare == 0) {
+            return true;
+        } else if (compare < 0) {
+            return contains(current.left, key);
+        } else {
+            return contains(current.right, key);
+        }
     }
 
     /**
@@ -64,7 +120,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return (root == null);
     }
 
     /**
@@ -74,7 +130,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -87,8 +143,19 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      * @return the union of this set with other
      */
     @Override
-    public MathSet union(MathSet other) {
-        return null;
+    public MathSet<KeyType> union(MathSet<KeyType> other) {
+
+        MathSet<KeyType> temp = new BSTSet<>();
+
+        for (KeyType key: this.keys()) {
+            temp.add(key);
+        }
+
+        for (KeyType key: other.keys()) {
+            temp.add(key);
+        }
+
+        return temp;
     }
 
     /**
@@ -101,8 +168,20 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      * @return the intersection of this set with other
      */
     @Override
-    public MathSet intersection(MathSet other) {
-        return null;
+    public MathSet<KeyType> intersection(MathSet<KeyType> other) {
+        // cycle through set A
+        // determine if key is in set B
+        // if true, add key to temp set
+
+        MathSet<KeyType> temp = new BSTSet<>();
+
+        for (KeyType key: this.keys()) {
+            if (other.contains(key)) {
+                temp.add(key);
+            }
+        }
+
+        return temp;
     }
 
     /**
@@ -119,24 +198,39 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      * @return the difference of this set with other
      */
     @Override
-    public MathSet difference(MathSet other) {
-
-        // TODO: implement keys method for this to work, take from BST
+    public MathSet<KeyType> difference(MathSet<KeyType> other) {
 
         // create an empty set that will hold the result
         MathSet<KeyType> result = new BSTSet<KeyType>();
 
-        // iterate (walk) through all items in this
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-
-        while (itr.hasNext()) {
-            KeyType currentKey = itr.next();
-            if (!other.contains(currentKey)) {
-                result.add(currentKey);
+        for (KeyType key: this.keys()) {
+            if (!other.contains(key)) {
+                result.add(key);
             }
         }
 
         return result;
+    }
+
+    /**
+     * Overridden toString() method to output this list
+     * in a presentable manner.  Used for testing in
+     * the Main class as well.
+     * @return
+     */
+    @Override
+    public String toString() {
+
+        String s = "{";
+        for (KeyType key: keys()) {
+            s += key + ", ";
+        }
+
+        s = s.substring(0, s.length() - 2);
+        s += "}";
+
+        return s;
+
     }
 
     /**
@@ -145,7 +239,32 @@ public class BSTSet<KeyType extends Comparable<KeyType>, ValueType> implements M
      * @return a collection of all keys in this set
      */
     @Override
-    public Iterable keys() {
-        return null;
+    public Iterable<KeyType> keys() {
+        // new empty queue to hold results
+        Queue<KeyType> queue = new Queue<>();
+
+        // start the recursion
+        inorder(root, queue);
+
+        return queue;
     }
+
+    // Helper method for keys(), recursively finds list of
+    // keys inside tree
+    private void inorder(Node current, Queue<KeyType> q) {
+        if (current == null) {
+            // do nothing - intentionally blank
+            return;
+        }
+
+        // left subtree
+        inorder(current.left, q);
+
+        // add self to queue
+        q.enqueue(current.key);
+
+        // right subtree
+        inorder(current.right, q);
+    }
+
 }
