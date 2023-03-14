@@ -1,5 +1,15 @@
 package edu.greenriver.sdev333;
-import java.util.Iterator;
+
+/**
+ * Binary Search Tree Set Class
+ *
+ *  * Author: Dee Brecke
+ *  * This class uses a binary search tree set to process data and compare two sets
+ *  * using math methods of intersect, union and difference
+ *  * The iterator uses a queue to store data
+ *
+ * @param <KeyType> comparable data type to be compared
+ */
 public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType>{
 
     private Node root;
@@ -31,12 +41,13 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
             return new Node(key, 1);
         }
         int compare = key.compareTo(current.key);
-        if(compare > 0){
+        if(compare < 0){
             current.left = put(current.left, key);
-        } else if (compare < 0) {
+        } else if (compare > 0) {
             current.right = put(current.right, key);
-        }else{
-            current.key = key;
+        }else{//this is unnecessary code but a good reminder that if the key is there, no need to do anything
+            //current.key = key;
+            //do nothing
         }
         current.count = size(current.left) + size(current.right) + 1;
         return current;
@@ -54,10 +65,16 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         return get(key) !=null;
     }
 
+    /**
+     * getter used in other methods to check if a given key is in the set
+     * @param key
+     * @return key if it is in the set
+     */
     public KeyType get(KeyType key) {
     return get(root, key);
     }
 
+    //private helper method for getter
      private KeyType get(Node current, KeyType key){
         if(current==null){
             return null;
@@ -66,7 +83,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
          if(compare < 0){
              //go left
              return get(current.left, key);
-         }else if(compare> 0){
+         }else if(compare > 0){
              return get(current.right, key);
          }else {
              return current.key;
@@ -93,6 +110,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         return size(root);
     }
 
+    //helper method
     private int size(Node current){
         if(current == null){
             return 0;
@@ -113,11 +131,13 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
         MathSet<KeyType> result = new BSTSet<KeyType>();
-        //walk through this and see if they are in other if not put in result
-        //for (item: this) {
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-        while (itr.hasNext()){
-            KeyType currentKey = itr.next();
+        //walk through this and put in result
+        for (KeyType currentKey: this.keys()) {
+            result.add(currentKey);
+        }
+        //then walk through other and put in result
+        //because it's a set, it won't add duplicates
+        for(KeyType currentKey : other.keys()){
             result.add(currentKey);
         }
         return result;
@@ -135,16 +155,12 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
         MathSet<KeyType> result = new BSTSet<KeyType>();
-        //walk through this and see if they are in other if not put in result
-        //for (item: this) {
-
-//        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-//        while (itr.hasNext()){
-//            KeyType currentKey = itr.next();
-//            if(other.contains(currentKey)){
-//                result.add(currentKey);
-//            }
-//        }
+        //walk through this and see if they are in other if so put in result
+        for (KeyType currentKey: this.keys()) {
+            if(other.contains(currentKey)){
+                result.add(currentKey);
+            }
+        }
         return result;
     }
 
@@ -161,10 +177,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
         MathSet<KeyType> result = new BSTSet<KeyType>();
         //walk through this and see if they are in other if not put in result
-        //for (item: this) {
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-        while (itr.hasNext()){
-            KeyType currentKey = itr.next();
+        for (KeyType currentKey: this.keys()) {
             if(!other.contains(currentKey)){
                 result.add(currentKey);
             }
@@ -188,6 +201,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         return queue;
     }
 
+    //helper method for iterator
     private void inOrder(Node current, Queue<KeyType> q){
         if(current == null){
             //do nothing -- just exit
@@ -196,5 +210,18 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         inOrder(current.left, q);
         q.enqueue(current.key);
         inOrder(current.right, q);
+    }
+
+    /**
+     * Method to print out results as a string instead of an address
+     * useful for testing
+     * @return string version of data in set
+     */
+    public String toString(){
+        String output ="";
+        for(KeyType key: keys()){
+            output += key + ", ";
+        }
+        return output;
     }
 }
