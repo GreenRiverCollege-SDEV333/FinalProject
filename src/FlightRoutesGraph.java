@@ -49,7 +49,7 @@ public class FlightRoutesGraph {
     public static void main(String[] args) {
         FlightRoutesGraph g = new FlightRoutesGraph();
         //add cities
-//        g.addNode("SEA");
+        g.addNode("SEA");
         g.addNode("JFK");
         g.addNode("ORD");
         g.addNode("ATL");
@@ -61,11 +61,15 @@ public class FlightRoutesGraph {
         g.addEdge("ATL", "MCO");
         g.addEdge("DEN", "ORD");
         g.addEdge("ORD", "ATL");
-//        g.addEdge("JFK", "MCO");
-//        g.addEdge("JFK", "MCO");
-//        g.addEdge("JFK", "MCO");
+        g.addEdge("SEA", "MCO");
+        g.addEdge("SEA", "JFK");
+        g.addEdge("JFK", "ATL");
 
         //look for direct flights from JFK
         MathSet<String> directJFK = g.getNeighbors("JFK");
+        for (String a: directJFK.keys()) {
+            System.out.println(a);
+        }
+
     }
 }
