@@ -1,10 +1,13 @@
 import edu.greenriver.sdev333.BSTSet;
 import edu.greenriver.sdev333.MathSet;
+import edu.greenriver.sdev333.SeparateChainingHashTable;
 
 import java.util.HashSet;
 
 /**
  * Created in class 3/13/23, Ken coding
+ *
+ * printlns added by me
  *
  * Importing interface MathSet - can we use this for testing?
  */
@@ -27,12 +30,13 @@ public class FlightRoutesGraph {
     private MathSet<String> nodes;          // set of nodes
 
     private MathSet<Edge> edges;            // set of edges
-/* Commented out so Main class would compile
+
+    //Commented out so Main class would compile
     public FlightRoutesGraph() {
         nodes = new BSTSet<>();
-        edges = new HashSet<>();            // must use HashSet here as edges are not comparable
+        edges = new SeparateChainingHashTable<>();     // must use HashSet here as edges are not comparable
     }
-*/
+
     public void addNode(String city) {
         nodes.add(city);
     }
@@ -99,6 +103,9 @@ public class FlightRoutesGraph {
         // look for direct flights from JFK
         MathSet<String> directFromJFK = g.getNeighbors("JFK");
         MathSet<String> directFromATL = g.getNeighbors("ATL");
+
+        System.out.println(directFromJFK);
+        System.out.println(directFromATL);
 
     }
 }
