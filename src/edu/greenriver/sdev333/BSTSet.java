@@ -2,8 +2,14 @@ package edu.greenriver.sdev333;
 
 import java.util.Iterator;
 
+/**
+ * Kevin Stone
+ * SDEV333: Final Project Part 1 - Implementing a Set
+ *
+ */
 public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
 
+    // private helper class used throughout class
     private class Node {
         private KeyType key;
         private Node left;
@@ -16,7 +22,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
         }
     }
 
-    // field
+    // private field
     private Node root;
 
     /**
@@ -26,7 +32,42 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public void add(KeyType key) {
+        // starts the recursion
+        root = addNode(root, key);
+    }
 
+    // private helper method used in class
+    // however, Sets do not utilize values - only keys
+    private Node addNode(Node current, KeyType key){
+        // current is the root of the subtree we are looking at
+        // we are now at where we are supposed to be
+        if(current == null) {
+            // create a new node
+            return new Node(key, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+        // cmp will be -1 if key < currrent.key
+        // cmp will be 0 if key == current.key
+        // cmp will be 1 if key > currrent.key
+
+        // we need to go left
+        if(cmp < 0) {
+            current.left = addNode(current.left, key);
+        }
+        // we need to go right
+        else if(cmp > 0) {
+            current.right = addNode(current.right, key);
+        }
+        else {
+            // key already exists in the set
+            current.key = key;
+        }
+
+        // update the node's N - number of nodes in the subtree
+        // size of my left + size of my right + myself
+        current.N = size(current.left) + size(current.right) + 1;
+        return current;
     }
 
     /**
@@ -37,6 +78,30 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public boolean contains(KeyType key) {
+
+        // start at beginning, and look at each node's
+        // left and right
+        Node current = root;
+        while (current != null) {
+            int cmp = key.compareTo(current.key);
+            // cmp will be -1 if key < currrent.key
+            // cmp will be 0 if key == current.key
+            // cmp will be 1 if key > currrent.key
+
+            // we need to go left
+            if(cmp < 0) {
+                current = current.left;
+            }
+            // we need to go right
+            else if(cmp > 0) {
+                current = current.right;
+            }
+            else {
+                // key already exists in the set
+                return true;
+            }
+
+        }
         return false;
     }
 
@@ -47,7 +112,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return root == null;
     }
 
     /**
@@ -57,7 +122,18 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public int size() {
-        return 0;
+
+        return size(root);
+    }
+
+    // private helper method used in class
+    private int size(Node current) {
+        if (current == null) {
+            return 0;
+        }
+        else {
+            return size(current.left) + size(current.right) + 1;
+        }
     }
 
     /**
@@ -71,7 +147,23 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+
+        // create an empty set to return
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        // add each key to result set, then check the "otherSet"
+        // for new keys to add
+        for (KeyType key : this.keys()) {
+            result.add(key);
+        }
+
+        // if key in "otherSet" is not in our resultSet - add to resultSet
+        for (KeyType currentKey : other.keys()) {
+            if (!result.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -85,7 +177,16 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        // create an empty set to return
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        // if our "otherSet" contains a key from our currentSet - add key to resultSet
+        for(KeyType currentKey : this.keys()){
+            if(other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -99,14 +200,12 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        // create an empty set that will hold the result
+        // create an empty set to return
         MathSet<KeyType> result = new BSTSet<KeyType>();
 
-        // iterate through all of the items in this
-        Iterator<KeyType> itr = (Iterator<KeyType>) this.keys();
-        while (itr.hasNext()) {
-            KeyType currentKey = itr.next();
-            if (!other.contains(currentKey)) {
+        // if key in setA (currentSet) is NOT in setB (otherSet) - add to resultSet
+        for(KeyType currentKey : this.keys()){
+            if(!other.contains(currentKey)){
                 result.add(currentKey);
             }
         }
@@ -120,6 +219,27 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+
+        // create a new empty queue to hold my results
+        Queue<KeyType> keyQueue = new Queue<>();
+
+        // start the recursion, collecting results in the queue
+        inorder(root, keyQueue);
+
+        // when done, return the queue
+        return keyQueue;
+    }
+
+    // private helper method used in class, using provided Queue class
+    private void inorder(Node current, Queue<KeyType> q){
+        if(current == null) {
+            // do nothing - end the method
+            return;
+        }
+
+        inorder(current.left, q);
+        q.enqueue(current.key);
+        inorder(current.right, q);
+
     }
 }
