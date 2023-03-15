@@ -22,6 +22,28 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public void add(Object key) {
+        root = add(root,key);
+
+    }
+
+    private Node add( Node current, KeyType key) {
+        if (current == null) {
+            return new Node(key, 1);
+        }
+
+        int x = key.compareTo(current.key);
+
+        if (x < 0) { 
+            current.left = add(current.left, key);
+        } else if (x > 0) {
+            current.right = add(current.right, key);
+        } else {
+            current.key = key;
+        }
+
+        current.N = size(current.left) + size(current.right) + 1;
+
+        return current;
 
     }
 
@@ -31,15 +53,28 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public boolean contains(Object key) {
+        Node current = root;
+        while(current != null){
+            int x = key.compareTo(current.key);
+            if(x < 0){
+                current = current.left;
+            }else if(x > 0){
+                current = current.right;
+            }else {
+                return true;
+            }
+        }
+
         return false;
     }
+
 
     /**
      * @return true if the set is empty, false otherwise
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return root == null || root.N == 0;
     }
 
     /**
@@ -47,7 +82,15 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public int size() {
-        return 0;
+        return size(root);
+    }
+
+    private int size(Node current){
+        if(current == null){
+            return 0;
+        } else {
+            return size(current.left) + size(current.right) + 1;
+        }
     }
 
     /**
