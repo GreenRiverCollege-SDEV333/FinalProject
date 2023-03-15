@@ -1,8 +1,6 @@
 import edu.greenriver.sdev333.BSTSet;
 import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.SeparateChainingHashTable;
-
-import java.util.HashSet;
+import edu.greenriver.sdev333.HashSet;
 
 /**
  * Created in class 3/13/23, Ken coding
@@ -34,7 +32,7 @@ public class FlightRoutesGraph {
     //Commented out so Main class would compile
     public FlightRoutesGraph() {
         nodes = new BSTSet<>();
-        edges = new SeparateChainingHashTable<>();     // must use HashSet here as edges are not comparable
+        edges = new HashSet<>();     // must use HashSet here as edges are not comparable
     }
 
     public void addNode(String city) {

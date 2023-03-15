@@ -1,7 +1,5 @@
-import edu.greenriver.sdev333.BSTSet;
 import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.SeparateChainingHashTable;
-import java.security.Key;
+import edu.greenriver.sdev333.HashSet;
 
 /**
  * Used to test our set implementations.  Each class is declared twice to
@@ -20,8 +18,8 @@ public class Main {
         //MathSet<String> test2 = new BSTSet<>();
 
         // Test SeparateChainingHashTable structures
-        MathSet<String> test1 = new SeparateChainingHashTable<>();
-        MathSet<String> test2 = new SeparateChainingHashTable<>();
+        MathSet<String> test1 = new HashSet<>();
+        MathSet<String> test2 = new HashSet<>();
 
         System.out.println("isEmpty() - should be true: " + test1.isEmpty());
         System.out.println("size() - should be 0: " + test1.size());

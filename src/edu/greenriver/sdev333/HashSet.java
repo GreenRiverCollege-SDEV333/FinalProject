@@ -1,7 +1,5 @@
 package edu.greenriver.sdev333;
 
-import java.security.Key;
-
 /**
  * This class implements the MathSet interface, mimicking a mathematical
  * set while employing an Array of LinkedLists in its implementation. This
