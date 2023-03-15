@@ -7,11 +7,11 @@ import java.security.Key;
  * set while employing an Array of LinkedLists in its implementation. This
  * class is not ordered, and does not require its keys to implement any
  * special interfaces.  Some code implemented in class w/ Ken
- *
+ *SeparateChainingHashTable
  * @author Paul Woods
  * @param <KeyType>
  */
-public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
+public class HashSet<KeyType>  implements MathSet<KeyType> {
 
     private int M;      // number of buckets
     private LinkedList<KeyType>[] bucket; // lists that reside in each bucket
@@ -21,7 +21,7 @@ public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
      * Default constructor,  defaults to a bucket list size
      * of 997 elements.
      */
-    public SeparateChainingHashTable() {
+    public HashSet() {
         this(997);  // call w/ a default prime # value, ensure more unique lists
     }
 
@@ -30,7 +30,7 @@ public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
      * for.
      * @param M
      */
-    public SeparateChainingHashTable(int M) {
+    public HashSet(int M) {
         this.M = M;
 
         bucket = new LinkedList[M];
@@ -110,7 +110,7 @@ public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
     public MathSet<KeyType> union(MathSet<KeyType> other) {
 
 
-        MathSet<KeyType> temp = new SeparateChainingHashTable<>();
+        MathSet<KeyType> temp = new HashSet<>();
 
         for (KeyType key: this.keys()) {
             temp.add(key);
@@ -138,7 +138,7 @@ public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
         // determine if key is in set B
         // if true, add key to temp set
 
-        MathSet<KeyType> temp = new SeparateChainingHashTable<>();
+        MathSet<KeyType> temp = new HashSet<>();
 
         for (KeyType key: this.keys()) {
             if (other.contains(key)) {
@@ -162,7 +162,7 @@ public class SeparateChainingHashTable<KeyType>  implements MathSet<KeyType> {
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
 
         // create an empty set that will hold the result
-        MathSet<KeyType> result = new SeparateChainingHashTable<KeyType>();
+        MathSet<KeyType> result = new HashSet<KeyType>();
 
         for (KeyType key: this.keys()) {
             if (!other.contains(key)) {
