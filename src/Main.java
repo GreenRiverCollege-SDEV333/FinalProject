@@ -1,12 +1,13 @@
 import edu.greenriver.sdev333.BSTSet;
 import edu.greenriver.sdev333.MathSet;
+import edu.greenriver.sdev333.SeparateChainingHashTable;
 
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("BSTSet tests:");
-        BSTSet<String> firstSet = new BSTSet<String>();
-        BSTSet<String> secondSet = new BSTSet<String>();
+        SeparateChainingHashTable<String> firstSet = new SeparateChainingHashTable<String>();
+        SeparateChainingHashTable<String> secondSet = new SeparateChainingHashTable<String>();
 
         System.out.println("isEmpty before adding to set: " + firstSet.isEmpty());
         firstSet.add("a");
