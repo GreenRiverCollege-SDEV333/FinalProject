@@ -3,7 +3,7 @@ package edu.greenriver.sdev333;
 import java.util.Iterator;
 
 // page 398
-public class BSTSet<KeyType> implements MathSet<KeyType>
+public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType>
 {
     private class Node{
         private KeyType key;
@@ -31,7 +31,7 @@ public class BSTSet<KeyType> implements MathSet<KeyType>
     @Override
     public void add(KeyType key)
     {
-
+            //TODO
     }
 
     /**
