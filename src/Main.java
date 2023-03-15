@@ -15,7 +15,7 @@ public class Main {
         one.add("fourth");
         System.out.println(one.isEmpty());
 
-        MathSet<String> two = new HashingSet<>();
+        MathSet<String> two = new BSTSet<>();
         two.add("second");
         two.add("fourth");
         two.add("sixth");

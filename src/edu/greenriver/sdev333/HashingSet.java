@@ -1,8 +1,4 @@
 package edu.greenriver.sdev333;
-
-import java.lang.reflect.Array;
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -13,7 +9,7 @@ import java.util.LinkedList;
  */
 
 public class HashingSet <KeyType> implements MathSet<KeyType>{
-    private LinkedList [] hs;
+    private LinkedList <KeyType> [] hs;
     private int M;
 
     public HashingSet(){
@@ -28,7 +24,6 @@ public class HashingSet <KeyType> implements MathSet<KeyType>{
     }
     private int hash(KeyType key){
         return (key.hashCode() & 0x7fffffff) % M;
-//        return 1;
     }
 
 
@@ -155,7 +150,7 @@ public class HashingSet <KeyType> implements MathSet<KeyType>{
         Queue<KeyType> queue = new Queue<>();
         for(int i =0; i<M; i++){
            for(int j= 0; j< hs[i].size(); j++){
-               KeyType current = (KeyType) hs[i].get(j);
+               KeyType current = hs[i].get(j);
                queue.enqueue(current);           }
         }
         return queue;
