@@ -55,6 +55,11 @@ public class FlightRoutesGraph {
         g.addNode("ATL");
         g.addNode("MCO");
         g.addNode("DEN");
+        g.addNode("NED");
+        g.addNode("ASE");
+        g.addNode("PLD");
+        //duplicate
+        g.addNode("PLD");
 
         //add connections
         g.addEdge("JFK", "MCO");
@@ -63,6 +68,15 @@ public class FlightRoutesGraph {
         g.addEdge("ORD", "ATL");
         g.addEdge("SEA", "MCO");
         g.addEdge("SEA", "JFK");
+        g.addEdge("JFK", "ATL");
+
+        g.addEdge("JFK", "PLD");
+        g.addEdge("ASE", "MCO");
+        g.addEdge("DEN", "NED");
+        g.addEdge("JFK", "NED");
+        g.addEdge("SEA", "ASE");
+        g.addEdge("SEA", "DEN");
+        //duplicate
         g.addEdge("JFK", "ATL");
 
         //look for direct flights from JFK
