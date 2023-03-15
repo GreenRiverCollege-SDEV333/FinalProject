@@ -12,10 +12,10 @@ public class Main {
         Scanner input = new Scanner(inputString);
         Scanner inputTwo = new Scanner(inputStringTwo);
 
-        //MathSet<String> ms = new SeparateChainingHashSet<String>();
-        //MathSet<String> otherMS = new SeparateChainingHashSet<>();
-        MathSet<String> ms = new BSTSet<>();
-        MathSet<String> otherMS = new BSTSet<>();
+        MathSet<String> ms = new SeparateChainingHashSet<String>(997);
+        MathSet<String> otherMS = new SeparateChainingHashSet<>(997);
+        //MathSet<String> ms = new BSTSet<>();
+        //MathSet<String> otherMS = new BSTSet<>();
 
         // isEmpty test before adding anything
         System.out.println(ms.isEmpty());
