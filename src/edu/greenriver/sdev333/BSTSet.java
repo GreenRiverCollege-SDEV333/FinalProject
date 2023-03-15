@@ -64,7 +64,6 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -99,7 +98,18 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public MathSet union(MathSet other) {
-        return null;
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+                result.add(currentKey);
+        }
+
+        for (KeyType currentKey : other.keys()) {
+            if (!result.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -108,7 +118,14 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public MathSet intersection(MathSet other) {
-        return null;
+        MathSet<KeyType> result = new BSTSet<KeyType>();
+
+        for(KeyType currentKey : this.keys()){
+            if(other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -136,6 +153,8 @@ public class BSTSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public Iterable keys() {
-        return null;
+        Queue<KeyType> queue = new Queue<>();
+        inorder(root,queue);
+        return queue;
     }
 }
