@@ -3,7 +3,12 @@ package edu.greenriver.sdev333;
 import java.util.Iterator;
 
 /**
- * FIFO queue, page 151 of the red book
+ * @Author Ron Nguyen
+ * Date: March 15, 2023
+ * SDEV 333
+ * Professor: Ken Hang
+ * File name: Queue.java
+ * File Description: This file is an implement of Queue
  */
 public class Queue<ItemType> implements Iterable<ItemType> {
     // private helper node class:
