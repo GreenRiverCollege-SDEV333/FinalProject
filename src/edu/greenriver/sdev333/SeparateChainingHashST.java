@@ -1,10 +1,10 @@
 package edu.greenriver.sdev333;
 
-public class HashMathSet<KeyType> implements MathSet<KeyType> {
+public class SeparateChainingHashST<KeyType> implements MathSet<KeyType> {
 
     private SeparateChainingHashST<KeyType, Boolean> hashTable;
 
-    public HashMathSet() {
+    public SeparateChainingHashST() {
         hashTable = new SeparateChainingHashST<KeyType, Boolean>();
     }
 
@@ -30,7 +30,7 @@ public class HashMathSet<KeyType> implements MathSet<KeyType> {
 
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        MathSet<KeyType> result = new HashMathSet<KeyType>();
+        MathSet<KeyType> result = new SeparateChainingHashST<KeyType>();
         for (KeyType key : keys()) {
             result.add(key);
         }
@@ -42,7 +42,7 @@ public class HashMathSet<KeyType> implements MathSet<KeyType> {
 
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        MathSet<KeyType> result = new HashMathSet<KeyType>();
+        MathSet<KeyType> result = new SeparateChainingHashST<KeyType>();
         for (KeyType key : keys()) {
             if (other.contains(key)) {
                 result.add(key);
@@ -53,7 +53,7 @@ public class HashMathSet<KeyType> implements MathSet<KeyType> {
 
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        MathSet<KeyType> result = new HashMathSet<KeyType>();
+        MathSet<KeyType> result = new SeparateChainingHashST<KeyType>();
         for (KeyType key : keys()) {
             if (!other.contains(key)) {
                 result.add(key);

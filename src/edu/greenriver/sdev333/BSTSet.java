@@ -125,9 +125,15 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      * @param other specified set to intersect
      * @return the intersection of this set with other
      */
-    @Override
-    public MathSet intersection(MathSet other) {
-        return null;
+
+    public MathSet<KeyType> intersection(MathSet<KeyType> other) {
+        MathSet<KeyType> result = new BSTSet<>();
+        for (KeyType key : this.keys()) {
+            if (other.contains(key)) {
+                result.add(key);
+            }
+        }
+        return result;
     }
 
     /**
