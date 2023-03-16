@@ -64,7 +64,7 @@ public class SCHSet<KeyType> implements MathSet<KeyType> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() ==0;
     }
 
     /**

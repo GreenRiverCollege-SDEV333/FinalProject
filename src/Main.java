@@ -113,5 +113,9 @@ public class Main {
             System.out.print("\n");
         }
 
+        System.out.println(testSetThis.isEmpty());
+        System.out.println(testSetThisChain.isEmpty());
+        System.out.println(testSetThis.contains(13));
+        System.out.println(testSetOtherChain.contains(98));
     }
 }
