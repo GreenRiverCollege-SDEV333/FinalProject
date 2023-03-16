@@ -65,7 +65,7 @@ public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
         return get(key) != null;
     }
 
-    // method created in class (SequentialSearchST)
+    // use method created in class (SequentialSearchST)
     // return null if not found
     public KeyType get(KeyType key) {
         int index = hash(key); // find the bucket number
@@ -92,7 +92,7 @@ public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
     public int size() {
         // iterate through each "bucket"'s linkedList
         // for each of these lists, call the size method used in
-        // SequentialSearchST
+        // SequentialSearchST ( <- every time we "put" a key - size is incremented )
         int size = 0;
         for (int i = 0; i < M; i++) {
             size += st[i].size();
