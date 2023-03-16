@@ -3,7 +3,10 @@ package edu.greenriver.sdev333;
 import java.util.Iterator;
 
 /**
- * FIFO queue, page 151 of the red book
+ * @author Bao Huynh
+ * Date: 03/15/2023
+ * Class: SDEV333
+ * FINAL PROJECT
  */
 public class Queue<ItemType> implements Iterable<ItemType> {
     // private helper node class:
