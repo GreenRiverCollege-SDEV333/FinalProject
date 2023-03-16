@@ -49,7 +49,7 @@ public class SequentialSearchST <KeyType> {
 
     public int size() {
 
-        return 0;
+        return size;
     }
 
     public Iterable<KeyType> keys() {

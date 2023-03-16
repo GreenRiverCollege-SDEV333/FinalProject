@@ -9,7 +9,7 @@ public class Main {
         SeparateChainingHashTable<String> firstSet = new SeparateChainingHashTable<String>();
         SeparateChainingHashTable<String> secondSet = new SeparateChainingHashTable<String>();
 
-        System.out.println("isEmpty before adding to set: " + firstSet.isEmpty());
+        System.out.println("isEmpty before adding to firstSet: " + firstSet.isEmpty());
         firstSet.add("a");
         firstSet.add("b");
         firstSet.add("c");
@@ -23,8 +23,8 @@ public class Main {
 
 
         // display each key in BST sets
-        System.out.println("isEmpty after adding string to set: " + firstSet.isEmpty());
-        System.out.println("Iterable test - print each key in sets with forEach loop");
+        System.out.println("isEmpty after adding string to set: " + firstSet.isEmpty() + " Size is now: " + firstSet.size());
+        System.out.println("Iterable test - print each key in firstSet with forEach loop");
         for (String str : firstSet.keys()) {
             System.out.println(str);
         }
