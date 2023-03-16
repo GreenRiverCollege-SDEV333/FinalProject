@@ -1,7 +1,5 @@
 package edu.greenriver.sdev333;
 
-import java.util.Iterator;
-
 public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
 
     // private helper class
@@ -26,9 +24,24 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public void add(KeyType key) {
-
+        root = add(root,key);
     }
 
+    private Node add(Node current, KeyType key) {
+        if(current == null) {
+            return new Node (key,1);
+        }
+        int cmp = key.compareTo(current.key);
+        if(cmp < 0) {
+            current.left = add(current.left, key);
+        }
+        if(cmp > 0) {
+            current.right = add(current.right,key);
+        }
+        // increment N
+        current.N = size(current.left) + size(current.right) +1;
+        return current;
+    }
     /**
      * Is the key in the set?
      *
@@ -37,6 +50,9 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public boolean contains(KeyType key) {
+        while(root!=null) {
+            /// not sure what to put here
+        }
         return false;
     }
 
@@ -47,7 +63,7 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     /**
@@ -57,9 +73,16 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public int size() {
-        return 0;
+        return size(root);
     }
 
+    // helper class for size
+    private int size(Node current) {
+        if(current == null) {
+            return 0;
+        }
+        return current.N;
+    }
     /**
      * Determine the union of this set with another specified set.
      * Returns A union B, where A is this set, B is other set.
@@ -71,7 +94,15 @@ public class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyT
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> union = new BSTSet<KeyType>();
+
+        for(KeyType key : this.keys()) {
+            union.add(key);
+        }
+        for(KeyType key : other.keys()) {
+            union.add(key);
+        }
+        return union;
     }
 
     /**
