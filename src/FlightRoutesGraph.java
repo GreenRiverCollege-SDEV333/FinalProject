@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BSTSet;
+import edu.greenriver.sdev333.HashSet;
 import edu.greenriver.sdev333.MathSet;
 
 public class FlightRoutesGraph {
