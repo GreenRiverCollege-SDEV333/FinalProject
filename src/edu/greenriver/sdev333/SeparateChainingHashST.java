@@ -2,15 +2,18 @@ package edu.greenriver.sdev333;
 
 public class SeparateChainingHashST<KeyType> implements MathSet<KeyType> {
 
-    private SeparateChainingHashST<KeyType, Boolean> hashTable;
+    private SeparateChainingHashST<KeyType> hashTable;
 
     public SeparateChainingHashST() {
-        hashTable = new SeparateChainingHashST<KeyType, Boolean>();
+        hashTable = new SeparateChainingHashST<KeyType>();
     }
 
     @Override
     public void add(KeyType key) {
-        hashTable.put(key, true);
+        hashTable.put(key);
+    }
+
+    private void put(KeyType key) {
     }
 
     @Override
