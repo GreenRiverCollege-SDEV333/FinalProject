@@ -1,6 +1,6 @@
 package edu.greenriver.sdev333;
 
-class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
+public class BSTset<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
     //fields
     private Node root;
 
@@ -117,7 +117,7 @@ class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
         // Create an empty set that hold the result
-        MathSet<KeyType> result = new BSTSet<KeyType>();
+        MathSet<KeyType> result = new BSTset<KeyType>();
 
         //add all element from this set
         for (KeyType currentKey : this.keys()){
@@ -141,7 +141,7 @@ class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        MathSet<KeyType> result = new BSTSet<KeyType>();
+        MathSet<KeyType> result = new BSTset<KeyType>();
         for (KeyType currentKey : this.keys()){
             // if the key contains in the other set, add to result set
             if (other.contains(currentKey)){
@@ -163,7 +163,7 @@ class BSTSet<KeyType extends Comparable<KeyType>> implements MathSet<KeyType> {
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
         // Create an empty set that hold the result
-        MathSet<KeyType> result = new BSTSet<KeyType>();
+        MathSet<KeyType> result = new BSTset<KeyType>();
         for (KeyType currentKey : this.keys()){
             if (!other.contains(currentKey)){
                 result.add(currentKey);

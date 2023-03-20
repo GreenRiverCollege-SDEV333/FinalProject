@@ -1,8 +1,7 @@
 import java.util.Scanner;
 import edu.greenriver.sdev333.BSTset;
 import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.SeperateChainingHashTableSet;
+import edu.greenriver.sdev333.SeparateChainingHashTable;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,7 +9,7 @@ public class Main {
         //string created to put in set
         String testString = "I L O V E K U M A"; //9
 
-        MathSet<String> testOne = new SeperateChainingHashTableSet<>();
+        MathSet<String> testOne = new SeparateChainingHashTable<>();
 
 
         //scanner to add string to BSTSet
@@ -26,7 +25,7 @@ public class Main {
         }
 
         //Test for MathSet
-        MathSet<String> testTwo = new SeperateChainingHashTableSet<>();
+        MathSet<String> testTwo = new SeparateChainingHashTable<>();
         testTwo.add("I");
         testTwo.add("t");
         testTwo.add("i");
@@ -62,9 +61,8 @@ public class Main {
         System.out.println(testTwo.contains("a"));
         System.out.println(testTwo.contains("T"));
         System.out.println(testTwo.contains("z"));
-//
-//
-//        System.out.println("__________________________________");
+
+        System.out.println("__________________________________");
 //
 //        System.out.println();
 //        // this is the testOne for union/intersection/different methods
