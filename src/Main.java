@@ -1,7 +1,9 @@
 import java.util.Scanner;
-import edu.greenriver.sdev333.BSTset;
+
 import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.SeparateChainingHashTable;
+import edu.greenriver.sdev333.SeparateChainingHashTables;
+import edu.greenriver.sdev333.BSTset;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +11,7 @@ public class Main {
         //string created to put in set
         String testString = "I L O V E K U M A"; //9
 
-        MathSet<String> testOne = new SeparateChainingHashTable<>();
+        MathSet<String> testOne = new SeparateChainingHashTables<>();
 
 
         //scanner to add string to BSTSet
@@ -25,7 +27,7 @@ public class Main {
         }
 
         //Test for MathSet
-        MathSet<String> testTwo = new SeparateChainingHashTable<>();
+        MathSet<String> testTwo = new SeparateChainingHashTables<>();
         testTwo.add("I");
         testTwo.add("t");
         testTwo.add("i");
