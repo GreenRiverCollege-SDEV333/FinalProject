@@ -1,27 +1,24 @@
 package edu.greenriver.sdev333;
 /**
- * Kevin Stone
- * SDEV333: Final Project Part 1 - Implementing a Set
- *
  * This class is to implement the MathSet interface. The
  * SequentialSearchST class (created in-class with instructor
  * Ken Hang) is used in this implementation.
  */
-public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
+public class SeparateChainingHashTables<KeyType> implements MathSet<KeyType> {
     // fields:
     // array of linked lists - but we wrote a linked list in SequentialSearchSt
     private SequentialSearchST<KeyType>[] st;
     private int M; // M is the number of buckets
 
     // default constructor that calls our parameterized constructor
-    public SeparateChainingHashTable(){
+    public SeparateChainingHashTables(){
         // default constructor
         // calls the other constructor with a value
         this(997);
     }
 
     // constructor
-    public SeparateChainingHashTable(int M) {
+    public SeparateChainingHashTables(int M) {
         // take their number of buckets and save them into the field
         this.M = M;
 
@@ -113,7 +110,7 @@ public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
 
-        MathSet<KeyType> result = new SeparateChainingHashTable<KeyType>(M);
+        MathSet<KeyType> result = new SeparateChainingHashTables<KeyType>(M);
 
         // add all current keys to resultSet
         for (KeyType currentKey: this.keys()) {
@@ -138,7 +135,7 @@ public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
 
-        MathSet<KeyType> result = new SeparateChainingHashTable<KeyType>(M);
+        MathSet<KeyType> result = new SeparateChainingHashTables<KeyType>(M);
 
         // if our current key is also in our "other" keys, add to resultSet
         for (KeyType currentKey: this.keys()) {
@@ -161,7 +158,7 @@ public class SeparateChainingHashTable<KeyType> implements MathSet<KeyType> {
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
 
-        MathSet<KeyType> result = new SeparateChainingHashTable<KeyType>(M);
+        MathSet<KeyType> result = new SeparateChainingHashTables<KeyType>(M);
 
         // if our current key is not in our "other" keys, add to resultSet
         for (KeyType currentKey: this.keys()) {
