@@ -1,7 +1,6 @@
 import edu.greenriver.sdev333.MathSet;
-import edu.greenriver.sdev333.BSTSet;
+import edu.greenriver.sdev333.*;
 
-import java.util.HashSet;
 
 
 public class FlightRoutesGraph
@@ -23,9 +22,6 @@ public class FlightRoutesGraph
 
 
     }
-
-
-
 
     private MathSet<String> nodes;
 
@@ -71,13 +67,6 @@ public class FlightRoutesGraph
         }
         return neighbors;
     }
-
-
-
-
-
-
-
 
     public static void main(String[] args)
     {
