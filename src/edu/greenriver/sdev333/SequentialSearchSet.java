@@ -41,17 +41,17 @@ public class SequentialSearchSet <KeyType> {
     }
 
 
-//    public ValueType get(KeyType key) {
-//        //Search for key, return associated value.
-//        for(Node x = first; x != null; x = x.next)
-//        {
-//            if(key.equals(x.key))
-//            {
-//                return x.val; // search hit
-//            }
-//        }
-//        return null;
-//    }
+    public boolean contains(KeyType key) {
+        //Search for key, return associated value.
+        for(Node x = first; x != null; x = x.next)
+        {
+            if(key.equals(x.key))
+            {
+                return true; // search hit
+            }
+        }
+        return false;
+    }
 
 
     public int size() {

@@ -81,6 +81,7 @@ public class FlightRoutesGraph
 
         //add connections between cities (edges, routes)
         g.addEdge("JFK","MCO");
+        g.addEdge("ATL","JFK");
         g.addEdge("ATL","MCO");
         g.addEdge("DEN","ORD");
         g.addEdge("ORD","ATL");
@@ -89,7 +90,15 @@ public class FlightRoutesGraph
         // look for direct flgihts from JFK
         MathSet<String> directJFK = g.getNeighbors("JFK");
         MathSet<String> directFromATL = g.getNeighbors("ATL");
-
+        for (String key: directJFK.keys())
+        {
+            System.out.println(key);
+        }
+        System.out.println();
+        for (String key: directFromATL.keys())
+        {
+            System.out.println(key);
+        }
 
 
     }

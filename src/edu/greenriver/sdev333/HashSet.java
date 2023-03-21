@@ -49,12 +49,6 @@ public class HashSet<KeyType> implements MathSet<KeyType>
             return (key.hashCode() & 0x7fffffff) % M;
         }
 
-        public void put(KeyType key) {
-            int index = hash(key);
-            st[index].put(key);
-        }
-
-
 //        public ValueType get(KeyType key) {
 //            int index = hash(key);
 //            return st[index].get(key);
@@ -67,7 +61,8 @@ public class HashSet<KeyType> implements MathSet<KeyType>
      */
     @Override
     public void add(KeyType key) {
-
+        int index = hash(key);
+        st[index].put(key);
     }
 
     /**
@@ -79,6 +74,10 @@ public class HashSet<KeyType> implements MathSet<KeyType>
     @Override
     public boolean contains(KeyType key) {
         //get the key if the key is not null, return true.
+        //might need an iterator?
+        //need a index helper method?
+        int index = hash(key);
+        return st[index].contains(key);
     }
 
     /**
@@ -88,7 +87,7 @@ public class HashSet<KeyType> implements MathSet<KeyType>
      */
     @Override
     public boolean isEmpty() {
-        //if size() == 0 it will be empty.
+        return size() == 0;
     }
 
     public int size() {
@@ -112,7 +111,19 @@ public class HashSet<KeyType> implements MathSet<KeyType>
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new HashSet<>();
+        for(KeyType currentKey : this.keys())
+        {
+            result.add(currentKey);
+        }
+        for(KeyType currentKey : other.keys())
+        {
+            if(!result.contains(currentKey))
+            {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -126,7 +137,15 @@ public class HashSet<KeyType> implements MathSet<KeyType>
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new HashSet<>();
+        for(KeyType currentKey : this.keys())
+        {
+            if(other.contains(currentKey))
+            {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     /**
@@ -140,7 +159,16 @@ public class HashSet<KeyType> implements MathSet<KeyType>
      */
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        return null;
+        MathSet<KeyType> result = new HashSet<KeyType>();
+
+        for(KeyType currentKey : this.keys())
+        {
+            if(!other.contains(currentKey))
+            {
+                result.add(currentKey);
+            }
+        }
+        return result;
     }
 
     public Iterable<KeyType> keys() {
