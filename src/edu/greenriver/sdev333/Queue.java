@@ -12,40 +12,25 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         private Node next;
     }
 
-    // fields
+    // fields:
     private Node first;
     private Node last;
     private int size;
 
-    /**
-     * Constructor. Creates an empty queue.
-     */
     public Queue() {
         first = null;
         last = null;
         size = 0;
     }
 
-    /**
-     * Check if the queue is empty.
-     * @return true if the queue is empty, false otherwise
-     */
     public boolean isEmpty() {
         return first == null;
     }
 
-    /**
-     * Number of items in the queue.
-     * @return the number of items in the queue
-     */
     public int size() {
         return size;
     }
 
-    /**
-     * Adds a specified item to the rear of the queue.
-     * @param item item to be added
-     */
     public void enqueue(ItemType item) {
         Node oldlast = last;
         last = new Node();
@@ -62,10 +47,6 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         size++;
     }
 
-    /**
-     * Removes and returns the item at the front of the queue.
-     * @return the item that was at the front of the queue before it was removed
-     */
     public ItemType dequeue() {
         ItemType item = first.data;
         first = first.next;
@@ -78,6 +59,7 @@ public class Queue<ItemType> implements Iterable<ItemType> {
 
     /**
      * Returns an iterator over elements of type {@code T}.
+     *
      * @return an Iterator.
      */
     @Override
