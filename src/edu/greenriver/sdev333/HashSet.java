@@ -3,7 +3,7 @@ package edu.greenriver.sdev333;
 public class HashSet<KeyType> implements MathSet<KeyType>{
     // fields:
     // array of linked lists
-    //private SequentialSearchST<KeyType, ValueType>[] st;
+    private SequentialSearchSet<KeyType>[] st;
     private int M;
 
     public HashSet(int M) {
@@ -11,11 +11,11 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
         this.M = M;
 
         // create new array
-        //st = new SequentialSearchST[M];
+        st = new SequentialSearchSet[M];
 
         // for each bucket, create a linked list
         for (int i = 0; i < M; i++) {
-        //    st[i] = new SequentialSearchST<>();
+            st[i] = new SequentialSearchSet<>();
         }
     }
 
@@ -27,6 +27,13 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
     // SeparateChainingHashST depends on having SequentialSearchST
     // will need to either bring in SequentialSearchST
     // or write your own linked list
+
+    private int hash(KeyType key) {
+        // hash function
+        // given a key, returns an int (bucket #, array index)
+        return (key.hashCode() & 0x7fffffff) % M;
+    }
+
     /**
      * Puts the specified key into the set.
      *
@@ -34,7 +41,8 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public void add(KeyType key) {
-
+        int index = hash(key); // find the bucket number
+        st[index].put(key);
     }
 
     /**
@@ -45,7 +53,8 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public boolean contains(KeyType key) {
-        return false;
+        int index = hash(key); // find the bucket number
+        return st[index].contains(key);
     }
 
     /**
@@ -55,7 +64,7 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     /**
@@ -65,7 +74,11 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public int size() {
-        return 0;
+        int size = 0;
+        for (int i = 0; i < M; i++) {
+            size += st[i].size();
+        }
+        return size;
     }
 
     /**
@@ -79,7 +92,21 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> union(MathSet<KeyType> other) {
-        return null;
+        // create an empty set that will hold the result
+        MathSet<KeyType> result = new HashSet<KeyType>(M);
+
+        // iterate through all items in this
+        for (KeyType currentKey : this.keys()) {
+            // add items that are not in other
+            if (!other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+        // add all items from other
+        for (KeyType currentKey : other.keys()) {
+            result.add(currentKey);
+        }
+        return result;
     }
 
     /**
@@ -93,7 +120,17 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> intersection(MathSet<KeyType> other) {
-        return null;
+        // create an empty set that will hold the result
+        MathSet<KeyType> result = new HashSet<KeyType>(M);
+
+        // iterate through all items in this
+        for (KeyType currentKey : this.keys()) {
+            if (other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -107,7 +144,17 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public MathSet<KeyType> difference(MathSet<KeyType> other) {
-        return null;
+        // create an empty set that will hold the result
+        MathSet<KeyType> result = new HashSet<KeyType>(M);
+
+        // iterate through all items in this
+        for (KeyType currentKey : this.keys()) {
+            if (!other.contains(currentKey)) {
+                result.add(currentKey);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -117,7 +164,13 @@ public class HashSet<KeyType> implements MathSet<KeyType>{
      */
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        Queue<KeyType> collector = new Queue<>();
+        for (int i = 0; i < M; i++) {
+            for (KeyType key : st[i].keys()) {
+                collector.enqueue(key);
+            }
+        }
+        return collector;
     }
 
 }
