@@ -1,3 +1,8 @@
+import edu.greenriver.sdev333.BSTSet;
+import edu.greenriver.sdev333.MathSet;
+
+import java.util.Scanner;
+
 /**
  * @Junny Noriega-Arenas
  * Final Project Part 1
@@ -8,5 +13,12 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
+
+        String inputString = "S E A R C H E X A M P L E";
+
+        Scanner input = new Scanner(inputString);
+
+        MathSet<String> st = new BSTSet<>();
+
     }
 }
